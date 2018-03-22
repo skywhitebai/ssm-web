@@ -109,14 +109,18 @@ public class LogAspect {
 		sb.append("-----------------------")
 				.append(DateUtil.getFormatSSS(startTime))
 				.append("-------------------------------------\n");
-		sb.append("json     : ").append(JSONArray.fromObject(joinPoint.getArgs()))
-				.append("\n");
 		sb.append("Controller: ").append(joinPoint.getTarget().getClass().getName())
 				.append("\n");
 		sb.append("Method    : ").append(method.getName()).append("\n");
-		sb.append("Params    : ")
-				.append(JSONObject.fromObject(request.getParameterMap()))
-				.append("\n");
+		if(joinPoint.getArgs().length>0){
+			sb.append("Json      : ").append(JSONArray.fromObject(joinPoint.getArgs()))
+					.append("\n");
+		}
+		if(request.getParameterMap().size()>0){
+			sb.append("Params    : ")
+					.append(JSONObject.fromObject(request.getParameterMap()))
+					.append("\n");
+		}
 		sb.append("URI       : ").append(request.getRequestURI()).append("\n");
 		sb.append("IP        : ").append(HttpUtil.getIp(request)).append("\n");
 		if (user != null) {
