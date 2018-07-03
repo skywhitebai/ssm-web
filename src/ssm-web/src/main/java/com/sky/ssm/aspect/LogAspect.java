@@ -6,11 +6,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -112,13 +111,19 @@ public class LogAspect {
 		sb.append("Controller: ").append(joinPoint.getTarget().getClass().getName())
 				.append("\n");
 		sb.append("Method    : ").append(method.getName()).append("\n");
-		if(joinPoint.getArgs().length>0){
-			sb.append("Json      : ").append(JSONArray.fromObject(joinPoint.getArgs()))
-					.append("\n");
+		// 获取请求参数
+		if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
+			sb.append("Json    : ");
+			for(int i=0;i<joinPoint.getArgs().length;i++){
+				if(!(joinPoint.getArgs()[i] instanceof org.springframework.ui.Model)){
+					sb.append(JSON.toJSONString(joinPoint.getArgs()[i]));
+				}
+			}
+			sb.append("\n");
 		}
 		if(request.getParameterMap().size()>0){
 			sb.append("Params    : ")
-					.append(JSONObject.fromObject(request.getParameterMap()))
+					.append(JSON.toJSONString(request.getParameterMap()))
 					.append("\n");
 		}
 		sb.append("URI       : ").append(request.getRequestURI()).append("\n");
@@ -154,7 +159,7 @@ public class LogAspect {
 				.append("\n");
 		if (result != null && result instanceof BaseResponse) {
 			sbAfter.append("Response  : ")
-					.append(JSONObject.fromObject(result)).append("\n");
+					.append(JSON.toJSONString(result)).append("\n");
 
 		}
 		sbAfter.append("-----------------------")
