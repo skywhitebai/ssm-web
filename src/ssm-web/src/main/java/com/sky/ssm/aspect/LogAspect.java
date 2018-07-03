@@ -157,10 +157,15 @@ public class LogAspect {
 		sbAfter.append("CostTime  : ")
 				.append(endTime.getTime() - startTime.getTime()).append("ms")
 				.append("\n");
-		if (result != null && result instanceof BaseResponse) {
-			sbAfter.append("Response  : ")
-					.append(JSON.toJSONString(result)).append("\n");
-
+		if (result != null) {
+			try{
+				sb.append("Response  : ")
+						.append(JSON.toJSONString(result)).append("\n");
+			}catch(Exception ex){
+				ex.printStackTrace();
+				sb.append("result  : ")
+						.append(result).append("\n");
+			}
 		}
 		sbAfter.append("-----------------------")
 				.append(DateUtil.getFormatSSS(endTime))
