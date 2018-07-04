@@ -104,4 +104,12 @@ public class AccountController extends SuperController {
 		session.setAttribute(BaseConstant.LOGIN_NAME, user);
 		return BaseResponse.successData(user);
 	}
+
+
+	@RequestMapping("test")
+	@ResponseBody
+	@Login(action = Action.Skip)
+	public String test() {
+		return "上九天揽月，下五洲捉鳖";
+	}
 }

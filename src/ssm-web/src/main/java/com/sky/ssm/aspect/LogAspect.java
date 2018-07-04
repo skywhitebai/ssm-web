@@ -138,20 +138,6 @@ public class LogAspect {
 		}
 		logger.info(sb.toString());
 		Object result = joinPoint.proceed();
-		// try {
-		// //result = joinPoint.proceed();
-		// } catch (Exception ex) {
-		// ex.printStackTrace();
-		// logger.error("异常:{}", ex.getMessage(), ex);
-		// BaseResponse baseResponse;
-		// if (ex instanceof BaseException) {
-		// baseResponse = BaseResponse.success(
-		// ((BaseException) ex).getCode(), ex.getMessage());
-		// } else {
-		// baseResponse = BaseResponse.successMessage("系统异常，请稍后重试或联系客服");
-		// }
-		// result = JSONObject.fromObject(baseResponse).toString();
-		// }
 		endTime = new Date();
 		StringBuilder sbAfter = new StringBuilder();
 		sbAfter.append("CostTime  : ")

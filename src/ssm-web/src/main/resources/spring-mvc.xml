@@ -70,7 +70,15 @@
 	<context:component-scan base-package="com.sky.ssm.controller" />
 
 	<!-- 添加注解驱动 -->
-	<mvc:annotation-driven enable-matrix-variables="true" />
+	<!-- 返回字符串utf-8编码-->
+	<mvc:annotation-driven >
+		<!-- 消息转换器 -->
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<!-- 允许对静态资源文件的访问 -->
 
 	<mvc:default-servlet-handler />
